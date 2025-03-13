@@ -207,6 +207,7 @@ public final class WorldModel {
                 case Sapling.KEY -> this.parseSapling(properties, pt, id, imageStore);
                 case Stump.KEY -> this.parseStump(properties, pt, id, imageStore);
                 case Wildfire.KEY -> this.parseFire(properties, pt, id, imageStore);
+                case DudeOnFire.KEY -> this.parseDudeOnFire(properties, pt, id,imageStore);
                 default -> throw new IllegalArgumentException("Entity key is unknown");
             }
         }else{
@@ -377,4 +378,21 @@ public final class WorldModel {
         }
         return list;
     }
+    private void parseDudeOnFire(String[] properties, Point pt, String id, ImageStore imageStore) {
+        if (properties.length == Dude.NUM_PROPERTIES) {
+            Entity entity = new DudeOnFire(
+                    id,
+                    pt,
+                    imageStore.getImageList("DudeOnFire"),
+                    Integer.parseInt(properties[Dude.RESOURCE_LIMIT_IDX]),
+                    Double.parseDouble(properties[Dude.ACTION_PERIOD_IDX]),
+                    Double.parseDouble(properties[Dude.ANIMATION_PERIOD_IDX])
+            );
+            this.tryAddEntity(entity);
+        } else {
+            throw new IllegalArgumentException(String.format("DudeOnFire requires %d properties when parsing", Dude.NUM_PROPERTIES));
+        }
+    }
+
+
 }

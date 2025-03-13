@@ -19,5 +19,6 @@ public abstract class ExecutableEntity extends AnimatedEntity{
     public abstract void executeActivity(EventScheduler scheduler, WorldModel world, ImageStore imageStore);
 
 
-
+    protected double getActionPeriod() {return this.actionPeriod;
+    }
 }

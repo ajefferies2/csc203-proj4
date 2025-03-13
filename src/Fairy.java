@@ -17,7 +17,7 @@ public class Fairy extends MoveEntity{
     public Fairy(String id, Point position, double ap, double anp, List<PImage> images) {
         super (id, position, images, ap, anp, Fairy_PATHING);
     }
-    public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler) {
+    public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler, ImageStore imageStore) {
         // public Entity(String id, Point p, List<PImage> i, int rl, int rc, int ap, int anp
         if (this.position.adjacent(target.position)) {
             world.removeEntity(scheduler, target);
@@ -39,7 +39,7 @@ public class Fairy extends MoveEntity{
         if (fairyTarget.isPresent()) {
             Point tgtPos = fairyTarget.get().position;
 
-            if (this.moveTo(world, fairyTarget.get(), scheduler)) {
+            if (this.moveTo(world, fairyTarget.get(), scheduler, imageStore)) {
 
                 Sapling sapling = new Sapling( Sapling.KEY + "_"+fairyTarget.get().id, tgtPos, imageStore.getImageList(Sapling.KEY), 3);
 

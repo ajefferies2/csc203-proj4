@@ -45,6 +45,7 @@ public final class VirtualWorld extends PApplet {
         this.scheduleActions(this.world, this.scheduler, this.imageStore);
     }
 
+
     public void draw() {
         double appTime = (System.currentTimeMillis() - this.startTimeMillis) * 0.001;
         double frameTime = (appTime - this.scheduler.getCurrentTime());
@@ -86,11 +87,21 @@ public final class VirtualWorld extends PApplet {
     }
 
     private void triggerWildfire(WorldModel world, ImageStore imageStore, Point loc){
-        Wildfire fire = new Wildfire("fire", loc, 1.5, .33, imageStore.getImageList("fire"), 0);
-        world.addEntity(fire);
-        scheduler.scheduleEvent(fire, new Activity(fire, world, imageStore), fire.actionPeriod);
-        fire.scheduleActions(scheduler, world, imageStore);
+        Optional<Entity> clickedEntity = world.getOccupant(loc);
+
+        if (clickedEntity.isPresent() && clickedEntity.get() instanceof Dude) {
+            Dude dude = (Dude) clickedEntity.get();
+            dude.transformToDudeOnFire(world, scheduler, imageStore);
+        } else {
+            Wildfire fire = new Wildfire("fire", loc, 1.5, .33, imageStore.getImageList("fire"), 0);
+            world.addEntity(fire);
+            scheduler.scheduleEvent(fire, new Activity(fire, world, imageStore), fire.actionPeriod);
+            fire.scheduleActions(scheduler, world, imageStore);
+
+        }
     }
+
+
 
     public void keyPressed() {
         if (key == CODED) {
