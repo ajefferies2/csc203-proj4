@@ -9,7 +9,7 @@ public class DudeOnFire extends Dude{
     public DudeOnFire(String id, Point p, List<PImage> i, int rl, double ap, double anp) {
         super(id, p, i, rl, ap, anp);
     }
-    public static final String KEY = "DudeOnFire";
+    public static final String KEY = "dudeonfire";
 
     @Override
     public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler, ImageStore imageStore) {
@@ -39,10 +39,17 @@ public class DudeOnFire extends Dude{
                 this.getAnimationPeriod(),  this.resourceLimit, imageStore.getImageList(Dude.KEY));
 
         world.removeEntity(scheduler, this);
-        scheduler.unscheduleAllEvents(this);
+        //scheduler.unscheduleAllEvents(this);
         world.addEntity(dude);
         dude.scheduleActions(scheduler, world, imageStore);
         return true;
+        /*
+        DudeNotFull dude = new DudeNotFull(this.id, this.position, this.actionPeriod, this.animationPeriod, this.resourceLimit,this.images);
+        world.removeEntity(scheduler, this);
+        world.addEntity(dude);
+        dude.scheduleActions(scheduler, world, imageStore);
+        return true;
+         */
     }
 
     @Override
